@@ -30,6 +30,7 @@ class DocumentGenerateResponse(BaseModel):
     content: str
     summary: str
     validation_report: Dict[str, Any]
+    risk_analysis: Dict[str, Any]
     generated_at: datetime
 
 class TitleSuggestionRequest(BaseModel):

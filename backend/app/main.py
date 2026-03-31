@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import logging
 
-from app.api.v1 import auth, chatbot, documents, health, templates
+from app.api.v1 import auth, chatbot, documents, health, templates, history
 from app.core.config import settings
 
 logging.basicConfig(level=logging.INFO)
@@ -27,5 +27,6 @@ app.include_router(auth.router, prefix="/api/v1/auth", tags=["Authentication"])
 app.include_router(templates.router, prefix="/api/v1/templates", tags=["Templates"])
 app.include_router(documents.router, prefix="/api/v1/documents", tags=["Documents"])
 app.include_router(chatbot.router, prefix="/api/v1/chatbot", tags=["AI Chatbot"])
+app.include_router(history.router, prefix="/api/v1/history", tags=["History"])
 
 logger.info("Application setup complete. Ready to accept connections.")

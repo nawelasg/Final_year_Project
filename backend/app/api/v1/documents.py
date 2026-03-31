@@ -1,5 +1,10 @@
 from fastapi import APIRouter, Depends
-from app.models.schemas import DocumentGenerateRequest, DocumentGenerateResponse, TitleSuggestionRequest, ClauseExplanationRequest
+from app.models.schemas import (
+    DocumentGenerateRequest,
+    DocumentGenerateResponse,
+    TitleSuggestionRequest,
+    ClauseExplanationRequest,
+)
 from app.api.deps import get_current_user
 from app.services.document_generator import document_generator_service
 from datetime import datetime
@@ -11,7 +16,15 @@ async def generate_document(request: DocumentGenerateRequest, current_user: str 
     content = await document_generator_service.generate_document(request.template_id, request.field_values)
     summary = await document_generator_service.generate_summary(content)
     validation_report = await document_generator_service.validate_document(content, request.template_id)
-    return DocumentGenerateResponse(content=content, summary=summary, validation_report=validation_report, generated_at=datetime.utcnow())
+    risk_analysis = await document_generator_service.analyze_risk(content, request.template_id)
+
+    return DocumentGenerateResponse(
+        content=content,
+        summary=summary,
+        validation_report=validation_report,
+        risk_analysis=risk_analysis,
+        generated_at=datetime.utcnow(),
+    )
 
 @router.post("/suggest-title", response_model=dict)
 async def suggest_title_for_document(request: TitleSuggestionRequest, current_user: str = Depends(get_current_user)):

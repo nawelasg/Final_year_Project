@@ -115,7 +115,124 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Formal legal-document preview */
+.legal-doc-shell {
+  @apply rounded-xl border bg-muted/30 p-3 md:p-5;
+}
+
+.legal-doc-page {
+  background: #ffffff;
+  color: #111827;
+  width: 100%;
+  max-width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto;
+  padding: 24mm 20mm;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(17, 24, 39, 0.08);
+}
+
+.dark .legal-doc-page {
+  background: #ffffff;
+  color: #111827;
+}
+
+.legal-doc-content {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 15px;
+  line-height: 1.85;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.legal-doc-content h1,
+.legal-doc-content h2,
+.legal-doc-content h3,
+.legal-doc-content h4 {
+  font-family: "Times New Roman", Times, serif;
+  color: #111827;
+  text-align: center;
+  font-weight: 700;
+  margin: 0 0 16px;
+}
+
+.legal-doc-content p {
+  margin: 0 0 12px;
+  text-align: justify;
+}
+
+.legal-doc-content ol,
+.legal-doc-content ul {
+  margin: 0 0 12px 22px;
+  padding: 0;
+}
+
+.legal-doc-content li {
+  margin-bottom: 8px;
+}
+
+.legal-doc-title {
+  font-family: "Times New Roman", Times, serif;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.legal-doc-subtitle {
+  font-family: "Times New Roman", Times, serif;
+  text-align: center;
+  font-size: 13px;
+  font-style: italic;
+  margin-bottom: 20px;
+  color: #4b5563;
+}
+
+.legal-doc-disclaimer {
+  @apply rounded-md border border-amber-300/60 bg-amber-50 px-4 py-3 text-sm text-amber-900;
+}
+
+.dark .legal-doc-disclaimer {
+  @apply border-amber-800 bg-amber-950/40 text-amber-200;
+}
+
+/* Print styling */
+@media print {
+  body {
+    background: #ffffff !important;
+  }
+
+  header,
+  nav,
+  button,
+  .no-print {
+    display: none !important;
+  }
+
+  .legal-doc-shell {
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+  }
+
+  .legal-doc-page {
+    box-shadow: none !important;
+    border: none !important;
+    max-width: none !important;
+    min-height: auto !important;
+    margin: 0 !important;
+    padding: 16mm 14mm !important;
+  }
+
+  .print-area {
+    display: block !important;
   }
 }
