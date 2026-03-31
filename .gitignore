@@ -1,0 +1,59 @@
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment files
+.env
+.env.*
+!.env.example
+frontend/.env.local
+frontend/.env.production
+backend/.env
+backend/.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.python-version
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+backend/.venv/
+backend/venv/
+
+# Node / Next
+node_modules/
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/build/
+frontend/dist/
+
+# Python build artifacts
+build/
+dist/
+*.egg-info/
+
+# Backend data / large local assets
+backend/data/
+backend/prime.pdf
+
+# Misc cache
+.cache/
+coverage/
