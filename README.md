@@ -70,61 +70,55 @@ final_year_project_v2/
 ├── frontend/
 ├── backend/
 └── README.md
+```
 
-Requirements
+---
+
+## Requirements
 
 Make sure the following are installed:
-
-    Node.js v22.21.0
-    npm 10.8.3
-    Python 3.11.9
+- Node.js v22.21.0
+- npm 10.8.3
+- Python 3.11.9
 
 Recommended environment:
+- Windows
+- Git Bash
 
-    Windows
-    Git Bash
+**Important:**
+- Do not use Python 3.14 for the backend.
+- Backend virtual environment path is `backend/.venv`.
 
-Important:
+---
 
-    Do not use Python 3.14 for the backend.
-    Backend virtual environment path is backend/.venv.
-
-Backend Setup
+## Backend Setup
 
 Open Git Bash and move to the backend folder:
 
-Bash
-
+```bash
 cd backend
+```
 
-1. Create virtual environment
-
-If .venv does not already exist:
-
-Bash
-
+### 1. Create virtual environment
+If `.venv` does not already exist:
+```bash
 python -m venv .venv
+```
 
-2. Activate virtual environment
-
+### 2. Activate virtual environment
 On Windows Git Bash, use:
-
-Bash
-
+```bash
 source .venv/Scripts/activate
+```
 
-3. Install dependencies
-
-Bash
-
+### 3. Install dependencies
+```bash
 pip install -r requirements.txt
+```
 
-4. Create backend environment file
-
-Create backend/.env with:
-
-env
-
+### 4. Create backend environment file
+Create `backend/.env` with:
+```env
 SUPABASE_URL=your_supabase_url
 SUPABASE_KEY=your_supabase_anon_key
 GROQ_API_KEY=your_groq_api_key
@@ -132,37 +126,36 @@ JWT_SECRET_KEY=your_random_secret
 JWT_ALGORITHM=HS256
 JWT_EXPIRATION_HOURS=24
 CORS_ORIGINS=["http://localhost:3000"]
+```
 
-Supabase Setup
+---
+
+## Supabase Setup
 
 This project requires Supabase for:
-
-    authentication
-    vector storage
-    recent template history
+- authentication
+- vector storage
+- recent template history
 
 Use the Supabase SQL editor and run the following:
-1. Enable vector extension
 
-SQL
-
+### 1. Enable vector extension
+```sql
 create extension if not exists vector;
+```
 
-2. Create documents table
-
-SQL
-
+### 2. Create documents table
+```sql
 create table if not exists documents (
   id bigserial primary key,
   content text not null,
   metadata jsonb default '{}'::jsonb,
   embedding vector(384) not null
 );
+```
 
-3. Create vector match function
-
-SQL
-
+### 3. Create vector match function
+```sql
 create or replace function match_documents(
   query_embedding vector(384),
   match_threshold float,
@@ -187,11 +180,10 @@ as $$
   order by documents.embedding <=> query_embedding
   limit match_count;
 $$;
+```
 
-4. Create recent template history table
-
-SQL
-
+### 4. Create recent template history table
+```sql
 create table if not exists user_template_history (
   id bigserial primary key,
   user_id uuid not null,
@@ -199,132 +191,127 @@ create table if not exists user_template_history (
   template_name text not null,
   used_at timestamptz not null default now()
 );
+```
 
-Load Legal Data into Supabase
+---
+
+## Load Legal Data into Supabase
 
 With the backend virtual environment activated, run:
-
-Bash
-
+```bash
 python scripts/load_vectors_to_supabase.py
+```
 
 This will:
-
-    read the dataset files from backend/data/
-    generate embeddings locally
-    upload them to Supabase
+- read the dataset files from `backend/data/`
+- generate embeddings locally
+- upload them to Supabase
 
 To verify the number of inserted rows:
-
-Bash
-
+```bash
 python -c "from app.core.supabase import supabase_client; res=supabase_client.table('documents').select('*', count='exact').limit(0).execute(); print(res.count)"
+```
 
-Run Backend
+---
+
+## Run Backend
 
 From the backend folder with the virtual environment activated:
-
-Bash
-
+```bash
 uvicorn app.main:app --reload
+```
 
 Backend will run at:
-
-text
-
-http://127.0.0.1:8000
+`http://127.0.0.1:8000`
 
 Health check:
+`http://127.0.0.1:8000/api/v1/health`
 
-text
+---
 
-http://127.0.0.1:8000/api/v1/health
-
-Frontend Setup
+## Frontend Setup
 
 Open another terminal and move to the frontend folder:
-
-Bash
-
+```bash
 cd frontend
+```
 
-1. Install dependencies
-
-Bash
-
+### 1. Install dependencies
+```bash
 npm install
+```
 
-2. Optional frontend environment variable
-
-Create frontend/.env.local if you want to define the backend URL explicitly:
-
-env
-
+### 2. Optional frontend environment variable
+Create `frontend/.env.local` if you want to define the backend URL explicitly:
+```env
 NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
-
+```
 If this file is not created, the frontend already falls back to that local backend URL.
-3. Run frontend
 
-Bash
-
+### 3. Run frontend
+```bash
 npm run dev
+```
 
 Frontend will run at:
+`http://localhost:3000`
 
-text
+---
 
-http://localhost:3000
+## How to Use
 
-How to Use
+1. Start the backend
+2. Start the frontend
+3. Open `http://localhost:3000`
+4. Sign up or log in
+5. Open the dashboard
+6. Choose a document template
+7. Fill in the required fields
+8. Generate the document
+9. Review:
+   - AI Analysis
+   - Risk Analyzer
+   - Validation Report
+10. Use clause explanation if needed
+11. Print or save the document as PDF
+12. Use the chatbot for legal drafting help
 
-    Start the backend
-    Start the frontend
-    Open http://localhost:3000
-    Sign up or log in
-    Open the dashboard
-    Choose a document template
-    Fill in the required fields
-    Generate the document
-    Review:
-        AI Analysis
-        Risk Analyzer
-        Validation Report
-    Use clause explanation if needed
-    Print or save the document as PDF
-    Use the chatbot for legal drafting help
+---
 
-Production Build Check
-Frontend
+## Production Build Check
 
-Bash
-
+### Frontend
+```bash
 cd frontend
 npm run build
+```
 
-Backend startup check
-
-Bash
-
+### Backend startup check
+```bash
 cd backend
 source .venv/Scripts/activate
 uvicorn app.main:app
+```
 
 If both work, the project is in a deployment-ready state.
-Notes
 
-    The project is intended for Windows with Git Bash.
-    Use source .venv/Scripts/activate, not bin/activate.
-    Full generated legal documents are not auto-saved by default.
-    Only lightweight recent template history is stored.
-    The backend uses Groq for generation and review tasks.
-    Sentence Transformers are used for embeddings.
-    PyTorch is CPU-based in this project.
+---
 
-Suggested Deployment Stack
+## Notes
+
+- The project is intended for Windows with Git Bash.
+- Use `source .venv/Scripts/activate`, not `bin/activate`.
+- Full generated legal documents are not auto-saved by default.
+- Only lightweight recent template history is stored.
+- The backend uses Groq for generation and review tasks.
+- Sentence Transformers are used for embeddings.
+- PyTorch is CPU-based in this project.
+
+---
+
+## Suggested Deployment Stack
 
 Free-tier friendly option:
-
-    Frontend: Vercel
-    Backend: Render
-    Database/Auth: Supabase
-
+- Frontend: Vercel
+- Backend: Render
+- Database/Auth: Supabase
