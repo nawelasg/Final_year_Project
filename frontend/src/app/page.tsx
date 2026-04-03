@@ -16,7 +16,7 @@ const features = [
   {
     icon: ShieldCheck,
     title: 'Structured Review',
-    description: 'Get AI-assisted summaries and drafting support before final legal review.',
+    description: 'Get AI-assisted summaries, validation, and drafting support before final legal review.',
   },
 ];
 
@@ -84,12 +84,12 @@ export default function LandingPage() {
 
               <div className="mt-14 grid gap-4 md:grid-cols-3">
                 <div className="rounded-2xl border bg-background/80 p-5 text-left shadow-sm backdrop-blur">
-                  <p className="text-3xl font-bold">3+</p>
+                  <p className="text-3xl font-bold">8+</p>
                   <p className="mt-2 text-sm text-muted-foreground">Core legal document templates ready for drafting</p>
                 </div>
                 <div className="rounded-2xl border bg-background/80 p-5 text-left shadow-sm backdrop-blur">
                   <p className="text-3xl font-bold">AI</p>
-                  <p className="mt-2 text-sm text-muted-foreground">Groq-powered drafting, explanation, and analysis workflow</p>
+                  <p className="mt-2 text-sm text-muted-foreground">Draft generation, clause explanation, validation, and risk analysis workflow</p>
                 </div>
                 <div className="rounded-2xl border bg-background/80 p-5 text-left shadow-sm backdrop-blur">
                   <p className="text-3xl font-bold">Print-ready</p>
@@ -146,11 +146,11 @@ export default function LandingPage() {
                 <div className="space-y-4">
                   <div className="rounded-xl bg-white/10 p-4">
                     <p className="text-sm font-semibold">Draft legal agreements</p>
-                    <p className="mt-1 text-xs text-slate-300">Structured AI generation for common legal templates</p>
+                    <p className="mt-1 text-xs text-slate-300">Structured generation for common legal templates</p>
                   </div>
                   <div className="rounded-xl bg-white/10 p-4">
                     <p className="text-sm font-semibold">Understand legal language</p>
-                    <p className="mt-1 text-xs text-slate-300">Clause explanation and AI summary assistance</p>
+                    <p className="mt-1 text-xs text-slate-300">Clause explanation and summary assistance</p>
                   </div>
                   <div className="rounded-xl bg-white/10 p-4">
                     <p className="text-sm font-semibold">Export professionally</p>
